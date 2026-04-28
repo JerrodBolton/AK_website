@@ -1,0 +1,1734 @@
+/* ================================================================
+   ANIMAI KINGDOM — style.css
+   AI Web Developer: Claude
+   Theme: Forest Daybreak Fantasy AI
+
+   TABLE OF CONTENTS
+   ─────────────────────────────────────────────────────────────
+    1.  CSS Custom Properties  (colors, fonts, spacing — edit here)
+    2.  Reset & Base Styles    (remove browser defaults)
+    3.  Scroll Progress Bar
+    4.  Navigation Header
+    5.  Mobile Hamburger Menu
+    6.  Shared Button Styles
+    7.  Shared Section Styles  (labels, titles, subtitles)
+    8.  Hero Section
+    9.  About Section
+   10.  Companions Section & Cards
+   11.  Progress / Timeline Section
+   12.  AI Employees Section
+   13.  How to Use Section
+   14.  Contact / Future Work Section
+   15.  Footer
+   16.  Back to Top Button
+   17.  Fade-In Animations
+   18.  Responsive Design      (tablet & mobile breakpoints)
+   ─────────────────────────────────────────────────────────────
+================================================================ */
+
+
+/* ================================================================
+   1. CSS CUSTOM PROPERTIES (Design Tokens)
+   ─────────────────────────────────────────────────────────────
+   All colors, fonts, and spacing are defined here as variables.
+   To change the site theme, only edit values in this one block.
+   Use them anywhere as: color: var(--color-gold);
+================================================================ */
+:root {
+  /* ── Color Palette ──────────────────────────────────────────── */
+  --color-forest-deep:  #123D27;   /* Dark green — hero bg, cards on dark sections   */
+  --color-leaf:         #3F8A3E;   /* Medium green — links, hover states, borders     */
+  --color-kingdom:      #85C441;   /* Bright green — CTAs, highlights, progress fills */
+  --color-sunrise:      #F58220;   /* Orange — primary buttons, active badges          */
+  --color-gold:         #F7C948;   /* Golden yellow — accents, borders, logo text      */
+  --color-cream:        #FFF4DF;   /* Soft cream — light backgrounds, text on dark     */
+  --color-moss:         #16251B;   /* Darkest green — footer, deep dark backgrounds    */
+
+  /* ── Text Colors ────────────────────────────────────────────── */
+  --text-dark:   #1a2e20;                   /* Near-black — headings on light backgrounds   */
+  --text-body:   #3d4f3e;                   /* Mid green-gray — paragraphs on light bg      */
+  --text-light:  #FFF4DF;                   /* Cream — all text on dark backgrounds         */
+  --text-muted:  rgba(255, 244, 223, 0.70); /* Muted cream — subtitles on dark backgrounds  */
+
+  /* ── Typography ─────────────────────────────────────────────── */
+  --font-display: 'Cinzel', serif;      /* Fantasy display font — hero H1 and logo only   */
+  --font-heading: 'Lora', serif;        /* Elegant serif — section H2s and card names     */
+  --font-body:    'DM Sans', sans-serif;/* Clean sans-serif — all body text and UI labels */
+
+  /* ── Spacing (8px base grid) ────────────────────────────────── */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  48px;
+  --space-xxl: 80px;
+
+  /* ── Layout ─────────────────────────────────────────────────── */
+  --max-width: 1100px;  /* Maximum width of any content block     */
+  --max-text:   680px;  /* Maximum width of paragraph text blocks */
+
+  /* ── Border Radius ──────────────────────────────────────────── */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-pill: 999px; /* Makes a fully rounded "pill" shape     */
+
+  /* ── Box Shadows ────────────────────────────────────────────── */
+  --shadow-sm: 0 2px 8px  rgba(18, 61, 39, 0.10);
+  --shadow-md: 0 4px 20px rgba(18, 61, 39, 0.15);
+  --shadow-lg: 0 8px 40px rgba(18, 61, 39, 0.20);
+
+  /* ── Transition Speed ───────────────────────────────────────── */
+  --transition: 0.25s ease; /* Default hover/focus animation speed  */
+}
+
+
+/* ================================================================
+   2. RESET & BASE STYLES
+   Remove inconsistent browser defaults and set a clean foundation.
+================================================================ */
+
+/* Make width and height calculations include padding and border */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Enable smooth scroll for all anchor (#section) links */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px; /* Base font size — rem units scale from this */
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;         /* 16px */
+  line-height: 1.7;        /* Comfortable reading line height */
+  color: var(--text-dark);
+  background-color: var(--color-cream);
+  overflow-x: hidden;      /* Prevent horizontal scroll on mobile */
+}
+
+/* Images never overflow their container */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Remove default bullet points from lists */
+ul, ol {
+  list-style: none;
+}
+
+/* Links do not inherit an underline by default */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/*
+  Visible keyboard focus ring — shows a gold outline when a user
+  navigates with the Tab key instead of a mouse.
+  This is required for accessibility.
+*/
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/*
+  FIX APPLIED: scroll-margin-top on every section with an ID.
+  Without this, clicking a nav link (e.g. #about) would scroll
+  the section up behind the sticky header, hiding the heading.
+  70px matches the approximate height of the navigation bar.
+*/
+section[id] {
+  scroll-margin-top: 70px;
+}
+
+/* ── .container ─────────────────────────────────────────────────
+   Reusable centered wrapper. Wrap any section content in this
+   to keep it within the max content width with consistent padding.
+────────────────────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+
+/* ================================================================
+   3. SCROLL PROGRESS BAR
+   A thin gold-to-orange bar pinned to the very top of the page.
+   JavaScript (script.js) updates its width as the user scrolls.
+================================================================ */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;           /* JS sets this to 0%–100% based on scroll position */
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-sunrise));
+  z-index: 9999;       /* Must be above everything else */
+  transition: width 0.1s linear;
+}
+
+
+/* ================================================================
+   4. NAVIGATION HEADER
+================================================================ */
+#site-header {
+  position: fixed;           /* Stays at the top while user scrolls */
+  top: 3px;                  /* Sits below the 3px scroll progress bar */
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;   /* Starts invisible over the dark hero */
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+/*
+  .scrolled is added by JavaScript after the user scrolls 60px.
+  This changes the nav from transparent to a solid dark green bar.
+*/
+#site-header.scrolled {
+  background: rgba(18, 61, 39, 0.97);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px); /* Safari support */
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Inner nav row: logo on left, links on right */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-lg);
+}
+
+/* ── Logo (left side) ─────────────────────── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+}
+
+.nav-logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  letter-spacing: 0.05em;
+  display: none; /* Hidden on very small screens, shown at 640px+ */
+}
+
+/* ── Navigation Links (right side) ───────── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  list-style: none;
+}
+
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 244, 223, 0.85); /* Slightly muted cream */
+  text-decoration: none;
+  padding: 4px 2px;
+  position: relative;           /* Needed for the underline pseudo-element */
+  transition: color var(--transition);
+}
+
+/* Animated underline that slides in on hover and when link is active */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;                     /* Starts at zero width */
+  height: 2px;
+  background: var(--color-gold);
+  border-radius: 2px;
+  transition: width var(--transition);
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+/* Show the underline on hover OR when JavaScript marks the link active */
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* "Contact" link — styled as a small orange pill button */
+.nav-cta {
+  padding: 6px 14px;
+  background: var(--color-sunrise);
+  color: #fff !important;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.nav-cta:hover {
+  background: #d96d14;
+  transform: translateY(-1px);
+}
+
+/* Remove the underline from the pill-style contact button */
+.nav-cta::after {
+  display: none;
+}
+
+
+/* ================================================================
+   5. MOBILE HAMBURGER MENU
+================================================================ */
+
+/* The hamburger button — hidden on desktop, visible on mobile */
+.hamburger {
+  display: none;               /* JS-controlled visibility via media query below */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;               /* Must be above the mobile nav drawer */
+}
+
+/* Each of the three horizontal bars */
+.hamburger-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-cream);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/*
+  When JavaScript adds the .open class to the hamburger button,
+  the three bars animate into an X shape.
+*/
+.hamburger.open .hamburger-bar:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.hamburger.open .hamburger-bar:nth-child(2) {
+  opacity: 0; /* Middle bar fades out */
+}
+.hamburger.open .hamburger-bar:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/*
+  Dark semi-transparent backdrop behind the mobile nav drawer.
+  Clicking it closes the menu. JavaScript adds/removes .visible.
+*/
+.nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0; /* Covers the entire viewport */
+  background: rgba(22, 37, 27, 0.75);
+  z-index: 990;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.nav-backdrop.visible {
+  display: block;
+  opacity: 1;
+}
+
+
+/* ================================================================
+   6. SHARED BUTTON STYLES
+   These classes can be applied to any <a> or <button> element.
+================================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 28px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+/* Primary — solid Sunrise Orange fill */
+.btn-primary {
+  background: var(--color-sunrise);
+  color: #fff;
+  border-color: var(--color-sunrise);
+}
+.btn-primary:hover {
+  background: #d96d14;
+  border-color: #d96d14;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 130, 32, 0.35);
+}
+
+/* Secondary — Kingdom Green outline, transparent fill */
+.btn-secondary {
+  background: transparent;
+  color: var(--color-kingdom);
+  border-color: var(--color-kingdom);
+}
+.btn-secondary:hover {
+  background: var(--color-kingdom);
+  color: var(--color-moss);
+  transform: translateY(-2px);
+}
+
+/* Ghost — cream outline, for use on dark backgrounds like the hero */
+.btn-ghost {
+  background: transparent;
+  color: var(--color-cream);
+  border-color: rgba(255, 244, 223, 0.45);
+}
+.btn-ghost:hover {
+  background: rgba(255, 244, 223, 0.1);
+  border-color: var(--color-cream);
+  transform: translateY(-2px);
+}
+
+/* Full-width modifier — stretches button to fill its container */
+.btn-full {
+  width: 100%;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 14px;
+}
+
+
+/* ================================================================
+   7. SHARED SECTION STYLES
+   Consistent spacing, labels, and titles used across all sections.
+================================================================ */
+
+/* Standard section vertical padding */
+.section {
+  padding: var(--space-xxl) 0;
+}
+
+/* Small uppercase text label above section titles */
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-sunrise);
+  margin-bottom: var(--space-sm);
+}
+
+/* Main section title (H2) with a gold underline accent */
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 4vw, 2.4rem); /* Scales fluidly with viewport */
+  font-weight: 500;
+  line-height: 1.25;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
+  position: relative; /* Required for the ::after underline */
+}
+
+/* The decorative gold underline below section titles */
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--color-gold);
+  border-radius: 2px;
+}
+
+/* Optional subtitle paragraph below section title */
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--text-body);
+  max-width: var(--max-text);
+  margin-bottom: var(--space-xl);
+  line-height: 1.7;
+}
+
+/* ── Section background colors (alternating for visual rhythm) ── */
+.about-section      { background: var(--color-cream); }
+.companions-section { background: var(--color-forest-deep); }
+.progress-section   { background: var(--color-cream); }
+.employees-section  { background: var(--color-moss); }
+.howto-section      { background: var(--color-cream); }
+.contact-section    { background: var(--color-forest-deep); }
+
+/* Override text colors for dark-background sections */
+.companions-section .section-label,
+.employees-section  .section-label,
+.contact-section    .section-label {
+  color: var(--color-gold);
+}
+
+.companions-section .section-title,
+.employees-section  .section-title,
+.contact-section    .section-title {
+  color: var(--color-cream);
+}
+
+.companions-section .section-subtitle,
+.employees-section  .section-subtitle,
+.contact-section    .section-subtitle {
+  color: var(--text-muted);
+}
+
+
+/* ================================================================
+   8. HERO SECTION
+================================================================ */
+.hero-section {
+  position: relative;
+  min-height: 100vh;      /* Full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  /* Dark Moss base with a soft sunrise orange glow rising from the bottom */
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 80%, rgba(245, 130, 32, 0.18) 0%, transparent 60%),
+    var(--color-moss);
+  padding: 120px var(--space-lg) var(--space-xl);
+}
+
+/* ── Decorative CSS leaf shapes ─────────────────────────────── */
+.hero-leaves {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* Leaves should never block clicks */
+  overflow: hidden;
+}
+
+.leaf {
+  position: absolute;
+  border-radius: 50% 10% 50% 10%; /* Organic leaf shape */
+  opacity: 0.08;                   /* Very subtle, mostly a texture hint */
+}
+
+/* Each leaf is positioned differently to create depth */
+.leaf-1 { width: 300px; height: 300px; background: var(--color-kingdom); top: -80px;    left: -60px;   transform: rotate(25deg);  }
+.leaf-2 { width: 200px; height: 200px; background: var(--color-leaf);    top: 40px;     right: -40px;  transform: rotate(-15deg); }
+.leaf-3 { width: 400px; height: 400px; background: var(--color-kingdom); bottom: -100px; right: -80px;  transform: rotate(10deg);  }
+.leaf-4 { width: 180px; height: 180px; background: var(--color-leaf);    bottom: 60px;  left: -30px;   transform: rotate(-30deg); }
+
+/* Sunrise glow arc rising from the bottom of the hero */
+.hero-glow {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200%;
+  height: 120px;
+  background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(245, 130, 32, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Hero content wrapper ────────────────────────────────────── */
+.hero-content {
+  position: relative;
+  z-index: 2; /* Sits above the leaf decorations */
+  max-width: 760px;
+  margin: 0 auto;
+  /* CSS entrance animation — runs on load, no JavaScript needed */
+  animation: heroEntrance 0.9s ease forwards;
+}
+
+@keyframes heroEntrance {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Large logo in the hero */
+.hero-logo {
+  width: 500px;
+  height: 500px;
+  object-fit: contain;
+  margin: 0 auto var(--space-lg);
+  /* Soft golden glow around the logo */
+  filter: drop-shadow(0 0 28px rgba(247, 201, 72, 0.5));
+}
+
+/* Hero headline (H1) */
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3.2rem); /* Fluid scaling */
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-cream);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.02em;
+}
+
+/* Orange accent on the second line of the headline */
+.headline-accent {
+  color: var(--color-sunrise);
+}
+
+/* Short description paragraph below the headline */
+.hero-description {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 0 auto var(--space-xl);
+  line-height: 1.8;
+}
+
+/* Button group row */
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+
+/* ================================================================
+   9. ABOUT SECTION
+================================================================ */
+
+/* Two-column grid: text left, card right (collapses on mobile) */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* Left column: plain paragraph text */
+.about-text p {
+  color: var(--text-body);
+  margin-bottom: var(--space-md);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* Right column: white highlight card with gold left border */
+.about-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+  border-left: 4px solid var(--color-gold);
+}
+
+.about-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+  line-height: 1;
+}
+
+.about-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-forest-deep);
+  margin-bottom: var(--space-md);
+}
+
+.about-card-text {
+  color: var(--text-body);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: var(--space-lg);
+}
+
+/* Decorative gold horizontal rule */
+.gold-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-gold), transparent);
+  margin-bottom: var(--space-lg);
+}
+
+/* Three project stats displayed in a row */
+.about-stats {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.stat {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-forest-deep);
+  line-height: 1;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-body);
+  margin-top: 4px;
+}
+
+
+/* ================================================================
+  10. COMPANIONS SECTION & CARDS
+================================================================ */
+
+/* Grid: 3 columns desktop → 2 tablet → 1 mobile */
+.companions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+/* ── Individual Companion Card ─────────────────────────────── */
+.companion-card {
+  background: rgba(255, 244, 223, 0.05); /* Very subtle cream on dark bg */
+  border: 1px solid rgba(247, 201, 72, 0.2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.companion-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Colored top accent bar (4px, unique per companion) ─────── */
+.card-accent {
+  height: 4px;
+  width: 100%;
+}
+.shark-accent   { background: linear-gradient(90deg, #1a6fa8, #5bc4f0); }
+.penguin-accent { background: linear-gradient(90deg, #2a3a6e, #7aabdd); }
+.eagle-accent   { background: linear-gradient(90deg, #8B4513, #F7C948); }
+.monkey-accent  { background: linear-gradient(90deg, #F58220, #F7C948); }
+.panda-accent   { background: linear-gradient(90deg, #444, #aaa);       }
+
+/* Card content area */
+.card-body {
+  padding: var(--space-lg);
+}
+
+/* Image container — fixed height keeps all cards the same size */
+.card-image-wrap {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: var(--space-sm);
+  transition: transform 0.4s ease;
+}
+
+/* Subtle zoom effect on the image when the card is hovered */
+.companion-card:hover .card-image {
+  transform: scale(1.04);
+}
+
+/* Companion name (H3) */
+.card-name {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-cream);
+  margin-bottom: 4px;
+}
+
+/* Realm name in gold italic */
+.card-realm {
+  font-size: 0.85rem;
+  color: var(--color-gold);
+  margin-bottom: var(--space-sm);
+  font-style: italic;
+}
+
+/* Personality keywords */
+.card-personality {
+  font-size: 0.8rem;
+  color: rgba(255, 244, 223, 0.60);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.03em;
+}
+
+/* "Learn More" / "Show Less" toggle button */
+.card-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid rgba(247, 201, 72, 0.4);
+  border-radius: var(--radius-pill);
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  margin-bottom: var(--space-md);
+}
+
+.card-toggle:hover {
+  background: rgba(247, 201, 72, 0.12);
+  color: #fff;
+}
+
+/* Arrow icon inside the toggle button */
+.toggle-arrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  transition: transform var(--transition);
+}
+
+/* Rotate the arrow 180° when the details panel is open */
+.card-toggle[aria-expanded="true"] .toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* Expanded detail content panel */
+.card-details {
+  border-top: 1px solid rgba(247, 201, 72, 0.15);
+  padding-top: var(--space-md);
+  margin-top: var(--space-sm);
+  /* Slide-in animation when the panel opens */
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* A single detail block (heading + paragraph) inside the detail panel */
+.detail-block {
+  margin-bottom: var(--space-md);
+}
+
+.detail-heading {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-kingdom);
+  margin-bottom: 6px;
+}
+
+.detail-block p {
+  font-size: 0.9rem;
+  color: rgba(255, 244, 223, 0.80);
+  line-height: 1.7;
+}
+
+/* Character quote in a styled blockquote */
+.companion-quote {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--color-gold);
+  border-left: 3px solid var(--color-gold);
+  padding-left: var(--space-md);
+  margin-top: var(--space-md);
+  line-height: 1.6;
+}
+
+
+/* ================================================================
+  11. PROGRESS / TIMELINE SECTION
+================================================================ */
+
+/* Overall project progress bar at top of section */
+.overall-progress {
+  margin-bottom: var(--space-xl);
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-body);
+  margin-bottom: var(--space-sm);
+}
+
+.progress-pct {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-forest-deep);
+}
+
+/* Track (background bar) */
+.progress-track {
+  width: 100%;
+  height: 10px;
+  background: rgba(18, 61, 39, 0.12);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+/* Fill (green animated bar) */
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-leaf), var(--color-kingdom));
+  border-radius: var(--radius-pill);
+  animation: fillBar 1.5s ease forwards;
+}
+
+@keyframes fillBar {
+  from { width: 0%; }
+  /* "to" width is set by the inline style="width: 65%" on the element */
+}
+
+/* ── Timeline ───────────────────────────────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 40px; /* Space for the vertical line and dots on the left */
+}
+
+/* The vertical connecting line running down the left side */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 10px; /* Aligns with the center of the milestone dots */
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-kingdom), rgba(133, 196, 65, 0.1));
+  border-radius: 2px;
+}
+
+/* Each milestone row */
+.milestone {
+  position: relative;
+  margin-bottom: var(--space-xl);
+}
+
+/* The colored dot on the timeline line */
+.milestone-dot {
+  position: absolute;
+  left: -36px; /* Centers on the timeline::before line */
+  top: 20px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-kingdom);
+  border: 3px solid var(--color-cream);
+  box-shadow: 0 0 0 2px var(--color-kingdom);
+}
+
+/* Pulsing glow animation for active/in-progress milestones */
+.milestone-dot.pulse {
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0%   { box-shadow: 0 0 0 0   rgba(133, 196, 65, 0.6); }
+  70%  { box-shadow: 0 0 0 10px rgba(133, 196, 65, 0);   }
+  100% { box-shadow: 0 0 0 0   rgba(133, 196, 65, 0);   }
+}
+
+/* Dot color by milestone status */
+.milestone.completed .milestone-dot {
+  background: var(--color-kingdom);
+}
+.milestone.active .milestone-dot {
+  background: var(--color-sunrise);
+  border-color: var(--color-cream);
+  box-shadow: 0 0 0 2px var(--color-sunrise);
+  /* Active dot pulses in orange */
+  animation: pulseDotOrange 2s infinite;
+}
+
+@keyframes pulseDotOrange {
+  0%   { box-shadow: 0 0 0 0   rgba(245, 130, 32, 0.6); }
+  70%  { box-shadow: 0 0 0 10px rgba(245, 130, 32, 0);   }
+  100% { box-shadow: 0 0 0 0   rgba(245, 130, 32, 0);   }
+}
+
+/* The white card for each milestone */
+.milestone-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  border-left: 3px solid transparent; /* Color set per status below */
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.milestone-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+/* Left border color by status */
+.milestone.completed .milestone-card { border-left-color: var(--color-kingdom); }
+.milestone.active    .milestone-card { border-left-color: var(--color-sunrise); }
+
+/* Large emoji icon */
+.milestone-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* ── Status badges ──────────────────────────────────────────── */
+.milestone-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* Green badge — Completed */
+.badge-done    { background: rgba(133, 196, 65, 0.15); color: #2c6b24; }
+/* Orange badge — In Progress */
+.badge-active  { background: rgba(245, 130, 32, 0.15); color: #c05500; }
+/* Gray badge — Planned (available if needed) */
+.badge-planned { background: rgba(0, 0, 0, 0.06);      color: #666666; }
+
+.milestone-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-forest-deep);
+  margin-bottom: 6px;
+}
+
+.milestone-desc {
+  font-size: 0.9rem;
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+
+/* ================================================================
+  12. AI EMPLOYEES SECTION
+================================================================ */
+
+/* Grid: 3 columns desktop, 2 tablet, 1 mobile */
+.employees-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+/* Individual employee card */
+.employee-card {
+  background: rgba(255, 244, 223, 0.05);
+  border: 1px solid rgba(133, 196, 65, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  transition:
+    transform var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.employee-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(133, 196, 65, 0.55);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+}
+
+/* Large emoji role icon */
+.employee-role-icon {
+  font-size: 2.4rem;
+  margin-bottom: var(--space-md);
+  line-height: 1;
+}
+
+/* Role label — small gold pill tag */
+.employee-tag {
+  display: inline-block;
+  padding: 3px 12px;
+  background: rgba(247, 201, 72, 0.12);
+  color: var(--color-gold);
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+
+/* AI tool name */
+.employee-tool {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-cream);
+  margin-bottom: var(--space-sm);
+}
+
+/* Responsibility description */
+.employee-resp {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+
+/* ================================================================
+  13. HOW TO USE SECTION
+================================================================ */
+
+/* Grid: 3 columns desktop, 2 tablet, 1 mobile */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+/* Individual numbered step card */
+.step-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-xl) var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  border-top: 3px solid var(--color-kingdom); /* Green top accent */
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Circular step number badge */
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-forest-deep);
+  color: var(--color-cream);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  /* Step numbers are meaningful content — NOT hidden from screen readers */
+}
+
+.step-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-forest-deep);
+  margin-bottom: var(--space-sm);
+}
+
+.step-desc {
+  font-size: 0.9rem;
+  color: var(--text-body);
+  line-height: 1.7;
+}
+
+
+/* ================================================================
+  14. CONTACT / FUTURE WORK SECTION
+================================================================ */
+
+/* Two-column grid: future work left, form right */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* ── Left: Future Plans ─────────────────────────────────────── */
+.future-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--color-gold);
+  margin-bottom: var(--space-lg);
+}
+
+.future-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  list-style: none;
+}
+
+.future-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+/* Emoji icon in a rounded square box */
+.future-icon {
+  font-size: 1.5rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(247, 201, 72, 0.1);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.future-item strong {
+  display: block;
+  color: var(--color-cream);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.future-item p {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* ── Right: Contact Form Card ───────────────────────────────── */
+.contact-form-wrap {
+  background: rgba(255, 244, 223, 0.06);
+  border: 1px solid rgba(247, 201, 72, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+}
+
+.contact-form-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--color-gold);
+  margin-bottom: 6px;
+}
+
+.contact-form-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+/* Form field group (label + input stacked vertically) */
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+/* Always use visible <label> elements — do not rely on placeholder text alone */
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-cream);
+  margin-bottom: 6px;
+}
+
+/* Text inputs and textarea */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(247, 201, 72, 0.25);
+  border-radius: var(--radius-sm);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 244, 223, 0.35);
+}
+
+/* Gold border when the field is focused */
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Textarea — allow vertical resize only */
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+/* Confirmation message — hidden by default, shown by JS after submit */
+.form-confirmation {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  background: rgba(133, 196, 65, 0.15);
+  border: 1px solid rgba(133, 196, 65, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--color-kingdom);
+  font-size: 0.95rem;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+/* ================================================================
+  15. FOOTER
+================================================================ */
+.site-footer {
+  background: var(--color-moss);
+  border-top: 1px solid rgba(247, 201, 72, 0.15);
+  padding: var(--space-xl) 0 var(--space-lg);
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  text-align: center;
+}
+
+/* Footer brand: logo + name + tagline */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.footer-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+.footer-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  letter-spacing: 0.05em;
+}
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  max-width: 320px;
+}
+
+/* Footer nav links */
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.footer-nav a {
+  font-size: 0.85rem;
+  color: rgba(255, 244, 223, 0.65);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.footer-nav a:hover {
+  color: var(--color-gold);
+}
+
+/* Project credit line at the very bottom */
+.footer-credit {
+  font-size: 0.8rem;
+  color: rgba(255, 244, 223, 0.4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-badge {
+  background: rgba(247, 201, 72, 0.12);
+  color: var(--color-gold);
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+}
+
+
+/* ================================================================
+  16. BACK TO TOP BUTTON
+  ─────────────────────────────────────────────────────────────
+  FIX APPLIED: The original version used the HTML hidden attribute
+  combined with a CSS opacity trick, which created a conflict.
+  The hidden attribute sets display:none, which prevents CSS
+  opacity transitions from playing.
+
+  New approach:
+  - Button is always in the DOM (no hidden attribute in HTML)
+  - CSS makes it invisible and unclickable by default
+    (opacity: 0 + pointer-events: none)
+  - JavaScript adds the .visible class to show it
+  - CSS transition animates the opacity smoothly
+================================================================ */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  background: var(--color-sunrise);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(245, 130, 32, 0.4);
+  /* Hidden by default — JS adds .visible to show it */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, background var(--transition), transform var(--transition);
+}
+
+/* JavaScript adds this class when user scrolls past 300px */
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: #d96d14;
+  transform: translateY(-3px);
+}
+
+
+/* ================================================================
+  17. FADE-IN ANIMATIONS (scroll-triggered)
+  ─────────────────────────────────────────────────────────────
+  Elements with class="fade-in" start invisible and slightly
+  shifted down. JavaScript's IntersectionObserver adds
+  the class "is-visible" when each element scrolls into view,
+  triggering the CSS transition.
+
+  IMPORTANT: The hero section does NOT use this class.
+  The hero uses a separate CSS @keyframes animation (heroEntrance)
+  that runs immediately on page load without needing JavaScript.
+  This guarantees the hero is always visible.
+================================================================ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* JavaScript adds this class to trigger the animation */
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays — each child in a grid animates slightly later than the previous */
+.fade-in:nth-child(1) { transition-delay: 0.05s; }
+.fade-in:nth-child(2) { transition-delay: 0.10s; }
+.fade-in:nth-child(3) { transition-delay: 0.15s; }
+.fade-in:nth-child(4) { transition-delay: 0.20s; }
+.fade-in:nth-child(5) { transition-delay: 0.25s; }
+.fade-in:nth-child(6) { transition-delay: 0.30s; }
+
+/*
+  Accessibility: Respect the user's preference to reduce motion.
+  If the user has "Reduce Motion" turned on in their OS settings,
+  skip all animations instantly. This is required for accessibility.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* Make fade-in elements immediately visible without animating */
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* ================================================================
+  18. RESPONSIVE DESIGN
+  ─────────────────────────────────────────────────────────────
+  Breakpoints:
+    Mobile:  default styles (no media query needed)
+    Tablet:  640px and wider
+    Desktop: 1024px and wider
+
+  This follows a "mobile-first" approach: base styles work on
+  mobile, and media queries progressively enhance for larger screens.
+================================================================ */
+
+/* ── TABLET (640px and wider) ─────────────────────────────── */
+@media (min-width: 640px) {
+
+  /* Show the logo text next to the logo image */
+  .nav-logo-text {
+    display: block;
+  }
+
+  /* Companions: 2 columns */
+  .companions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Employees: 2 columns */
+  .employees-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Steps: 2 columns */
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+/* ── DESKTOP (1024px and wider) ───────────────────────────── */
+@media (min-width: 1024px) {
+
+  /* Show desktop nav links, hide hamburger button */
+  .nav-links {
+    display: flex !important; /* Override the mobile hidden state */
+    position: static;         /* Remove any positioning from mobile styles */
+    flex-direction: row;
+    background: transparent;
+    width: auto;
+    height: auto;
+    padding: 0;
+    box-shadow: none;
+    gap: var(--space-md);
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .nav-backdrop {
+    display: none !important;
+  }
+
+  /* Companions: 3 columns */
+  .companions-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Employees: 3 columns */
+  .employees-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Steps: 3 columns */
+  .steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* About: 2 columns */
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Contact: 2 columns */
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+/* ── MOBILE (below 768px) ─────────────────────────────────── */
+@media (max-width: 767px) {
+
+  /* Show the hamburger icon */
+  .hamburger {
+    display: flex;
+  }
+
+  /*
+    Mobile navigation drawer:
+    Slides in from the right side of the screen.
+    JavaScript adds .open to slide it into view.
+  */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;    /* Hidden off-screen to the right */
+    bottom: 0;
+    width: 260px;
+    background: var(--color-moss);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: var(--space-xxl) var(--space-xl);
+    gap: var(--space-xl);
+    z-index: 1050;
+    transition: right 0.3s ease;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4);
+    /* Override the default flex display from desktop styles */
+    display: flex !important;
+  }
+
+  /* Slide the drawer into view when .open is added by JavaScript */
+  .nav-links.open {
+    right: 0;
+  }
+
+  /* Larger link text inside the mobile drawer */
+  .nav-link {
+    font-size: 1.1rem;
+    color: var(--color-cream);
+  }
+
+  /* About: single column */
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Companions: single column */
+  .companions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Employees: single column */
+  .employees-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Steps: single column */
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Contact: future work stacks above form */
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reduce hero top padding on mobile */
+  .hero-section {
+    padding-top: 100px;
+    padding-bottom: var(--space-xl);
+  }
+
+  /* Smaller logo on mobile */
+  .hero-logo {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* Reduce section padding on mobile */
+  .section {
+    padding: var(--space-xl) 0;
+  }
+
+  /* Stack hero buttons vertically on small screens */
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+
+  /* Stats can wrap on very small screens */
+  .about-stats {
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+}
+
+/* ── VERY SMALL SCREENS (below 380px) ─────────────────────── */
+@media (max-width: 380px) {
+
+  /* Reduce horizontal padding on tiny screens */
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  /* Smaller headline on very small screens */
+  .hero-headline {
+    font-size: 1.5rem;
+  }
+
+}

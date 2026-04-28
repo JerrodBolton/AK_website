@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Animai Kingdom — Where Fantasy Companions Meet Artificial Intelligence. A student-led AI project featuring animal-based companions." />
+  <title>Animai Kingdom</title>
+
+  <!--
+    Google Fonts — three font families:
+    Cinzel   → fantasy display font for the hero headline and logo
+    Lora     → elegant serif for section titles and companion names
+    DM Sans  → clean sans-serif for all body text and UI labels
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       SCROLL PROGRESS BAR
+       A thin gold bar at the top of the viewport.
+       JavaScript updates its width as the user scrolls.
+  ============================================================ -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+
+  <!-- ============================================================
+       STICKY NAVIGATION BAR
+       Fixed to the top at all times.
+       Starts transparent over the dark hero, becomes solid green
+       after 60px of scroll. JavaScript adds the "scrolled" class.
+  ============================================================ -->
+  <header id="site-header">
+    <nav class="nav-container" aria-label="Main navigation">
+
+      <!-- Logo — left side. Clicking it scrolls back to the top. -->
+      <a href="#home" class="nav-logo" aria-label="Animai Kingdom — return to top">
+        <img src="images/logo.png" alt="Animai Kingdom logo — a golden crown above a glowing forest" class="nav-logo-img" />
+        <span class="nav-logo-text">Animai Kingdom</span>
+      </a>
+
+      <!-- Desktop navigation links — right side.
+           On mobile, these are hidden and shown in a slide-out drawer. -->
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#home"       class="nav-link">Home</a></li>
+        <li><a href="#about"      class="nav-link">About</a></li>
+        <li><a href="#companions" class="nav-link">Companions</a></li>
+        <li><a href="#progress"   class="nav-link">Progress</a></li>
+        <li><a href="#employees"  class="nav-link">AI Employees</a></li>
+        <li><a href="#howto"      class="nav-link">How to Use</a></li>
+        <li><a href="#contact"    class="nav-link nav-cta">Contact</a></li>
+      </ul>
+
+      <!-- Hamburger button — visible only on mobile.
+           JavaScript toggles "open" class to animate it and open the drawer. -->
+      <button class="hamburger" id="hamburger-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+
+    </nav>
+  </header>
+
+  <!-- Dark overlay behind the mobile nav drawer.
+       Clicking it closes the menu (handled by JavaScript). -->
+  <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
+
+
+  <!-- ============================================================
+       MAIN PAGE CONTENT
+  ============================================================ -->
+  <main>
+
+    <!-- ══════════════════════════════════════════════════════════
+         SECTION 1: HOME / ENTER THE KINGDOM
+         Full-viewport hero. CSS animation is used (not JS fade-in)
+         so the hero is always visible even if JavaScript is slow.
+    ══════════════════════════════════════════════════════════════ -->
+    <section id="home" class="hero-section">
+
+      <!-- Decorative CSS-drawn leaf shapes. aria-hidden = screen readers skip these. -->
+      <div class="hero-leaves" aria-hidden="true">
+        <div class="leaf leaf-1"></div>
+        <div class="leaf leaf-2"></div>
+        <div class="leaf leaf-3"></div>
+        <div class="leaf leaf-4"></div>
+      </div>
+
+      <!-- Hero content — uses CSS @keyframes entrance, not the JS fade-in class -->
+      <div class="hero-content">
+
+        <img src="images/logo.png" alt="Animai Kingdom — a golden crown glowing above a sunrise forest" class="hero-logo" />
+
+        <!-- H1 — one per page, used by screen readers and search engines -->
+        <h1 class="hero-headline">
+          Where Fantasy Companions Meet<br />
+          <span class="headline-accent">Artificial Intelligence.</span>
+        </h1>
+
+        <p class="hero-description">
+          Welcome to Animai Kingdom — a project bringing animal-inspired AI companions to life.
+          Set in a world of golden sunrises and glowing forests, we combine creative storytelling
+          with 3D modeling, voice technology, and physical engineering.
+        </p>
+
+        <!-- Three CTA buttons linking to sections below -->
+        <div class="hero-buttons">
+          <a href="#companions" class="btn btn-primary">Meet the Companions</a>
+          <a href="#progress"   class="btn btn-secondary">View Progress</a>
+          <a href="#contact"    class="btn btn-ghost">Join the Kingdom</a>
+        </div>
+
+      </div><!-- end .hero-content -->
+
+      <!-- Sunrise glow arc — decorative gradient, purely visual -->
+      <div class="hero-glow" aria-hidden="true"></div>
+
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         SECTION 2: ABOUT THE KINGDOM
+         Two columns: description left, highlighted card right.
+         Collapses to one column on mobile.
+    ══════════════════════════════════════════════════════════════ -->
+    <section id="about" class="section about-section">
+      <div class="container">
+
+        <div class="section-label">About the Kingdom</div>
+        <h2 class="section-title">A Kingdom Built on Connection</h2>
+
+        <div class="about-grid">
+
+          <!-- Left: project description -->
+          <div class="about-text fade-in">
+            <p>Animai Kingdom is a student-led exploration of how AI can feel more human. Instead of talking to a blank screen, users interact with unique animal companions that have their own personalities and purposes.</p>
+            <p>The project focuses on the bridge between the digital and physical world. By using 3D prototyping and hardware like Raspberry Pi, Animai Kingdom is working toward a future where these companions can sit on a desk and assist users in the real world.</p>
+            <p>We do not just build chatbots. We build characters with heart, designed to help users stay motivated, organized, calm, and creative.</p>
+          </div>
+
+          <!-- Right: highlighted purpose card -->
+          <div class="about-card fade-in">
+            <div class="about-card-icon" aria-hidden="true">🌿</div>
+            <h3 class="about-card-title">What This Website Is For</h3>
+            <p class="about-card-text">This website is the official home for the Animai Kingdom project. It gives visitors a place to meet the companions, follow development progress, and understand how AI tools helped build every part of the experience — from the story to the code.</p>
+            <div class="gold-divider" aria-hidden="true"></div>
+            <div class="about-stats">
+              <div class="stat"><span class="stat-number">5</span><span class="stat-label">Companions</span></div>
+              <div class="stat"><span class="stat-number">4</span><span class="stat-label">AI Tools</span></div>
+              <div class="stat"><span class="stat-number">1</span><span class="stat-label">Kingdom</span></div>
+            </div>
+          </div>
+
+        </div><!-- end .about-grid -->
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         SECTION 3: MEET THE COMPANIONS
+         Five companion cards. Each card has:
+         - A colored top bar (species-specific gradient)
+         - Companion image with descriptive alt text
+         - Name, realm, personality (always visible)
+         - A "Learn More" button that reveals the detail panel
+         JavaScript handles the expand/collapse behavior.
+    ══════════════════════════════════════════════════════════════ -->
+    <section id="companions" class="section companions-section">
+      <div class="container">
+
+        <div class="section-label">Meet the Companions</div>
+        <h2 class="section-title">The Five Guardians of Animai Kingdom</h2>
+        <p class="section-subtitle">Click any companion card to discover their full story, purpose, and future AI role.</p>
+
+        <!-- Grid: 3 cols desktop, 2 tablet, 1 mobile -->
+        <div class="companions-grid">
+
+
+          <!-- ── CARD 1: HeyShark ── -->
+          <article class="companion-card" aria-label="HeyShark companion card">
+            <!-- Top accent bar: ocean blue gradient -->
+            <div class="card-accent shark-accent" aria-hidden="true"></div>
+            <div class="card-body">
+              <div class="card-image-wrap">
+                <img src="images/AK_shark.png" alt="HeyShark — a bold confident shark companion seated on a wheelchair-style mobility base" class="card-image" />
+              </div>
+              <div class="card-info">
+                <h3 class="card-name">HeyShark</h3>
+                <p class="card-realm">🌊 Tideforge Harbor</p>
+                <p class="card-personality">Direct · High-Energy · Action-Focused</p>
+              </div>
+              <!-- aria-expanded + aria-controls connect button to detail panel for screen readers -->
+              <button class="card-toggle" aria-expanded="false" aria-controls="heyshark-details">
+                Learn More <span class="toggle-arrow" aria-hidden="true">▼</span>
+              </button>
+              <!-- hidden attribute: panel is invisible by default, JavaScript removes it on click -->
+              <div class="card-details" id="heyshark-details" hidden>
+                <div class="detail-block">
+                  <h4 class="detail-heading">The Mobility Base</h4>
+                  <p>HeyShark uses a wheelchair-style mobility base. This design represents adaptability and strength — showing that progress is not about how you move, but that you keep moving forward. It also serves as the foundation for the physical desk-bot prototype.</p>
+                </div>
+                <div class="detail-block">
+                  <h4 class="detail-heading">Role &amp; Future</h4>
+                  <p>He acts as an accountability partner. In the future, he will track goals and push users to stay disciplined.</p>
+                </div>
+                <blockquote class="companion-quote">"Stop waiting for the perfect tide. Start swimming now."</blockquote>
+              </div>
+            </div>
+          </article>
+
+
+          <!-- ── CARD 2: Penguin ── -->
+          <article class="companion-card" aria-label="Penguin companion card">
+            <!-- Top accent bar: navy to ice-blue gradient -->
+            <div class="card-accent penguin-accent" aria-hidden="true"></div>
+            <div class="card-body">
+              <div class="card-image-wrap">
+                <img src="images/AK_Penguin.png" alt="Penguin — a cheerful loyal penguin companion wearing a custom handcrafted jacket" class="card-image" />
+              </div>
+              <div class="card-info">
+                <h3 class="card-name">Penguin</h3>
+                <p class="card-realm">❄️ Frostbyte Village</p>
+                <p class="card-personality">Loyal · Steady · Cheerful</p>
+              </div>
+              <button class="card-toggle" aria-expanded="false" aria-controls="penguin-details">
+                Learn More <span class="toggle-arrow" aria-hidden="true">▼</span>
+              </button>
+              <div class="card-details" id="penguin-details" hidden>
+                <div class="detail-block">
+                  <h4 class="detail-heading">The Jacket</h4>
+                  <p>Even in the cold, Penguin wears custom-made jackets representing his village's love for craftsmanship and being prepared. Practically, this allows the project to test complex 3D printing textures and fabric details on physical models.</p>
+                </div>
+                <div class="detail-block">
+                  <h4 class="detail-heading">Role &amp; Future</h4>
+                  <p>He represents comfort and steady growth. Future AI versions will help users celebrate small wins and daily progress.</p>
+                </div>
+                <blockquote class="companion-quote">"Small steps still get you where you're going — especially if you're cozy!"</blockquote>
+              </div>
+            </div>
+          </article>
+
+
+          <!-- ── CARD 3: Hank the Eagle ── -->
+          <article class="companion-card" aria-label="Hank the Eagle companion card">
+            <!-- Top accent bar: warm brown to gold gradient -->
+            <div class="card-accent eagle-accent" aria-hidden="true"></div>
+            <div class="card-body">
+              <div class="card-image-wrap">
+                <img src="images/AK_Hank.png" alt="Hank the Eagle — a wise regal eagle companion dressed in polished professional attire" class="card-image" />
+              </div>
+              <div class="card-info">
+                <h3 class="card-name">Hank the Eagle</h3>
+                <p class="card-realm">🦅 Skyreach Court</p>
+                <p class="card-personality">Wise · Professional · Observant</p>
+              </div>
+              <button class="card-toggle" aria-expanded="false" aria-controls="eagle-details">
+                Learn More <span class="toggle-arrow" aria-hidden="true">▼</span>
+              </button>
+              <div class="card-details" id="eagle-details" hidden>
+                <div class="detail-block">
+                  <h4 class="detail-heading">The Professional Look</h4>
+                  <p>Hank is always dressed in polished, regal attire. Because he flies high and sees the big picture, his appearance reflects leadership, honor, and high standards befitting a royal advisor.</p>
+                </div>
+                <div class="detail-block">
+                  <h4 class="detail-heading">Role &amp; Future</h4>
+                  <p>He helps users plan and organize. Future AI features include summarizing complex information and providing strategic advice.</p>
+                </div>
+                <blockquote class="companion-quote">"Perspective is everything. Let's look at the big picture together."</blockquote>
+              </div>
+            </div>
+          </article>
+
+
+          <!-- ── CARD 4: Monkey King ── -->
+          <article class="companion-card" aria-label="Monkey King companion card">
+            <!-- Top accent bar: orange to gold gradient -->
+            <div class="card-accent monkey-accent" aria-hidden="true"></div>
+            <div class="card-body">
+              <div class="card-image-wrap">
+                <img src="images/AK_Monkey.png" alt="Monkey King — a bold energetic monkey companion with a playful and adventurous spirit" class="card-image" />
+              </div>
+              <div class="card-info">
+                <h3 class="card-name">Monkey King</h3>
+                <p class="card-realm">🌄 Suncrest Peaks</p>
+                <p class="card-personality">Playful · Bold · Energetic</p>
+              </div>
+              <button class="card-toggle" aria-expanded="false" aria-controls="monkey-details">
+                Learn More <span class="toggle-arrow" aria-hidden="true">▼</span>
+              </button>
+              <div class="card-details" id="monkey-details" hidden>
+                <div class="detail-block">
+                  <h4 class="detail-heading">The Humor</h4>
+                  <p>The Monkey King is always joking — using humor to break tension and build confidence, turning every challenge into a fun adventure. His jokes are not a sign of being unserious; they are a sign of his cleverness and creative spirit.</p>
+                </div>
+                <div class="detail-block">
+                  <h4 class="detail-heading">Role &amp; Future</h4>
+                  <p>He helps unlock imagination. Future AI use involves creative brainstorming and gamifying difficult tasks.</p>
+                </div>
+                <blockquote class="companion-quote">"If it's not an adventure, you're probably doing it wrong!"</blockquote>
+              </div>
+            </div>
+          </article>
+
+
+          <!-- ── CARD 5: Panda ── -->
+          <article class="companion-card" aria-label="Panda companion card">
+            <!-- Top accent bar: dark gray to light gray gradient -->
+            <div class="card-accent panda-accent" aria-hidden="true"></div>
+            <div class="card-body">
+              <div class="card-image-wrap">
+                <img src="images/AK_Panda.png" alt="Panda — a calm grounded panda companion with a gentle farmer spirit and peaceful presence" class="card-image" />
+              </div>
+              <div class="card-info">
+                <h3 class="card-name">Panda</h3>
+                <p class="card-realm">🎋 Bamboo Haven</p>
+                <p class="card-personality">Grounded · Peaceful · Supportive</p>
+              </div>
+              <button class="card-toggle" aria-expanded="false" aria-controls="panda-details">
+                Learn More <span class="toggle-arrow" aria-hidden="true">▼</span>
+              </button>
+              <div class="card-details" id="panda-details" hidden>
+                <div class="detail-block">
+                  <h4 class="detail-heading">The Farmer's Calm</h4>
+                  <p>Panda's peaceful nature comes from his background as a farmer. Tending the land taught him that everything has its own time and rhythm — and he brings that patience to every interaction.</p>
+                </div>
+                <div class="detail-block">
+                  <h4 class="detail-heading">Role &amp; Future</h4>
+                  <p>He acts as a grounding force for emotional support. Future versions will focus on wellness, mindfulness, and work-life balance.</p>
+                </div>
+                <blockquote class="companion-quote">"Breathe. Even the tallest bamboo grows one patient inch at a time."</blockquote>
+              </div>
+            </div>
+          </article>
+
+
+        </div><!-- end .companions-grid -->
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         SECTION 4: PROJECT PROGRESS / FROM CONCEPT TO COMPANION
+         Vertical timeline. Completed = green. In Progress = orange.
+         The pulsing dot uses a CSS animation to draw attention.
+    ══════════════════════════════════════════════════════════════ -->
+    <section id="progress" class="section progress-section">
+      <div class="container">
+
+        <div class="section-label">Project Progress</div>
+        <h2 class="section-title">From Concept to Companion</h2>
+        <p class="section-subtitle">Animai Kingdom is currently moving from the idea phase into functional prototypes.</p>
+
+        <!-- Progress bar. role + aria-value* makes it accessible to screen readers. -->
+        <div class="overall-progress">
+          <div class="progress-label">
+            <span>Overall Progress</span>
+            <span class="progress-pct">65%</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" aria-label="Overall project progress: 65 percent complete">
+            <div class="progress-fill" style="width: 65%"></div>
+          </div>
+        </div>
+
+        <div class="timeline">
+
+          <!-- MILESTONE 1 — Completed (green dot and green left border) -->
+          <div class="milestone completed fade-in">
+            <div class="milestone-dot" aria-hidden="true"></div>
+            <div class="milestone-card">
+              <div class="milestone-icon" aria-hidden="true">✏️</div>
+              <div class="milestone-content">
+                <span class="milestone-badge badge-done">Completed</span>
+                <h3 class="milestone-title">Character Design</h3>
+                <p class="milestone-desc">Core personalities, realms, and roles for all five companions have been finalized.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- MILESTONE 2 — Completed -->
+          <div class="milestone completed fade-in">
+            <div class="milestone-dot" aria-hidden="true"></div>
+            <div class="milestone-card">
+              <div class="milestone-icon" aria-hidden="true">🎨</div>
+              <div class="milestone-content">
+                <span class="milestone-badge badge-done">Completed</span>
+                <h3 class="milestone-title">Visual Style</h3>
+                <p class="milestone-desc">Forest Daybreak branding, color palette, and the Animai Kingdom logo are complete.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- MILESTONE 3 — Completed -->
+          <div class="milestone completed fade-in">
+            <div class="milestone-dot" aria-hidden="true"></div>
+            <div class="milestone-card">
+              <div class="milestone-icon" aria-hidden="true">🖨️</div>
+              <div class="milestone-content">
+                <span class="milestone-badge badge-done">Completed</span>
+                <h3 class="milestone-title">3D Printing</h3>
+                <p class="milestone-desc">A print-optimized model for Penguin was developed to test complex textures and fabric details.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- MILESTONE 4 — In Progress (orange pulsing dot) -->
+          <div class="milestone active fade-in">
+            <div class="milestone-dot pulse" aria-hidden="true"></div>
+            <div class="milestone-card">
+              <div class="milestone-icon" aria-hidden="true">⚙️</div>
+              <div class="milestone-content">
+                <!-- badge-active = orange, correctly matches the "In Progress" label -->
+                <span class="milestone-badge badge-active">In Progress</span>
+                <h3 class="milestone-title">Hardware Planning</h3>
+                <p class="milestone-desc">HeyShark's mobility base is being designed for Raspberry Pi integration as a desk-bot prototype.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- MILESTONE 5 — In Progress
+               FIX APPLIED: Previously had badge-planned (gray) with "In Progress" text — mismatch.
+               Now uses badge-active (orange) so the color matches the label. -->
+          <div class="milestone active fade-in">
+            <div class="milestone-dot pulse" aria-hidden="true"></div>
+            <div class="milestone-card">
+              <div class="milestone-icon" aria-hidden="true">🎙️</div>
+              <div class="milestone-content">
+                <span class="milestone-badge badge-active">In Progress</span>
+                <h3 class="milestone-title">Voice Development</h3>
+                <p class="milestone-desc">Work has started on unique AI-generated voice profiles for each companion.</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end .timeline -->
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         SECTION 5: AI EMPLOYEES
+         Grid of role cards for each AI tool used on the project.
+    ══════════════════════════════════════════════════════════════ -->
+    <section id="employees" class="section employees-section">
+      <div class="container">
+
+        <div class="section-label">The Team</div>
+        <h2 class="section-title">AI Employees</h2>
+        <p class="section-subtitle">This website and project were made possible with the help of specialized AI tools, each playing a distinct role in the creative process.</p>
+
+        <!-- 3 cols desktop, 2 tablet, 1 mobile -->
+        <div class="employees-grid">
+
+          <div class="employee-card fade-in">
+            <div class="employee-role-icon" aria-hidden="true">📋</div>
+            <div class="employee-tag">AI Project Manager</div>
+            <h3 class="employee-tool">ChatGPT</h3>
+            <p class="employee-resp">Organized the project roadmap, phases, purpose, and assignment requirements from start to finish.</p>
+          </div>
+
+          <div class="employee-card fade-in">
+            <div class="employee-role-icon" aria-hidden="true">✍️</div>
+            <div class="employee-tag">AI Content Writer</div>
+            <h3 class="employee-tool">Gemini</h3>
+            <p class="employee-resp">Developed the character lore, companion backstories, realm descriptions, and all website text.</p>
+          </div>
+
+          <div class="employee-card fade-in">
+            <div class="employee-role-icon" aria-hidden="true">🎨</div>
+            <div class="employee-tag">AI UX Designer</div>
+            <h3 class="employee-tool">Claude</h3>
+            <p class="employee-resp">Designed the website structure, navigation layout, visual hierarchy, color system, and user flow.</p>
+          </div>
+
+          <div class="employee-card fade-in">
+            <div class="employee-role-icon" aria-hidden="true">💻</div>
+            <div class="employee-tag">AI Web Developer</div>
+            <h3 class="employee-tool">Claude</h3>
+            <p class="employee-resp">Built the responsive website code in HTML, CSS, and JavaScript with beginner-friendly comments.</p>
+          </div>
+
+          <div class="employee-card fade-in">
+            <div class="employee-role-icon" aria-hidden="true">🔍</div>
+            <div class="employee-tag">AI Code Reviewer</div>
+            <h3 class="employee-tool">ChatGPT</h3>
+            <p class="employee-resp">Reviewed the final site for usability, clarity, responsiveness, and assignment requirements.</p>
+          </div>
+
+        </div><!-- end .employees-grid -->
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         SECTION 6: HOW TO USE THE WEBSITE
+         Six numbered step cards.
+         FIX: step-number does NOT have aria-hidden — the numbers
+         are meaningful content that screen readers should read.
+    ══════════════════════════════════════════════════════════════ -->
+    <section id="howto" class="section howto-section">
+      <div class="container">
+
+        <div class="section-label">Guide</div>
+        <h2 class="section-title">How to Use the Website</h2>
+        <p class="section-subtitle">New to Animai Kingdom? Here is your guide to navigating the kingdom.</p>
+
+        <!-- 3 cols desktop, 2 tablet, 1 mobile -->
+        <div class="steps-grid">
+
+          <div class="step-card fade-in">
+            <div class="step-number">1</div>
+            <h3 class="step-title">Home</h3>
+            <p class="step-desc">Get a quick overview of the Kingdom's mission and what Animai Kingdom is all about.</p>
+          </div>
+
+          <div class="step-card fade-in">
+            <div class="step-number">2</div>
+            <h3 class="step-title">About</h3>
+            <p class="step-desc">Learn the reason behind the project and the technology that powers it.</p>
+          </div>
+
+          <div class="step-card fade-in">
+            <div class="step-number">3</div>
+            <h3 class="step-title">Meet the Companions</h3>
+            <p class="step-desc">Discover which AI character fits your needs. Click any card to read their full story.</p>
+          </div>
+
+          <div class="step-card fade-in">
+            <div class="step-number">4</div>
+            <h3 class="step-title">Progress</h3>
+            <p class="step-desc">Check the latest 3D models, hardware plans, and development updates along the timeline.</p>
+          </div>
+
+          <div class="step-card fade-in">
+            <div class="step-number">5</div>
+            <h3 class="step-title">AI Employees</h3>
+            <p class="step-desc">See how different AI tools worked as a collaborative team to build this project.</p>
+          </div>
+
+          <div class="step-card fade-in">
+            <div class="step-number">6</div>
+            <h3 class="step-title">Contact &amp; Future Work</h3>
+            <p class="step-desc">Explore what is coming next for the Kingdom and reach out to connect with the project.</p>
+          </div>
+
+        </div><!-- end .steps-grid -->
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         SECTION 7: JOIN THE KINGDOM / CONTACT / FUTURE WORK
+         Left: future roadmap. Right: contact form.
+         Form is visual-only — JavaScript shows a confirmation message.
+    ══════════════════════════════════════════════════════════════ -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+
+        <div class="section-label">Join the Kingdom</div>
+        <h2 class="section-title">What's Coming Next</h2>
+        <p class="section-subtitle">Animai Kingdom is just getting started. Here is what we are building toward.</p>
+
+        <!-- 2 cols desktop, 1 col mobile -->
+        <div class="contact-grid">
+
+          <!-- LEFT: Future plans list -->
+          <div class="future-work fade-in">
+            <h3 class="future-title">Future Plans</h3>
+            <ul class="future-list">
+
+              <!-- FIX: was 🗿 (Easter Island head — wrong context).
+                   Changed to 🧊 (3D cube) which fits "3D Model Gallery" much better. -->
+              <li class="future-item">
+                <span class="future-icon" aria-hidden="true">🧊</span>
+                <div>
+                  <strong>3D Model Gallery</strong>
+                  <p>View and interact with 3D versions of the companions.</p>
+                </div>
+              </li>
+
+              <li class="future-item">
+                <span class="future-icon" aria-hidden="true">🎙️</span>
+                <div>
+                  <strong>Voice Assistant Demo</strong>
+                  <p>Hear how each character sounds in real time.</p>
+                </div>
+              </li>
+
+              <li class="future-item">
+                <span class="future-icon" aria-hidden="true">🤖</span>
+                <div>
+                  <strong>Desk-Bot Prototype</strong>
+                  <p>A physical, moving HeyShark powered by Raspberry Pi.</p>
+                </div>
+              </li>
+
+              <li class="future-item">
+                <span class="future-icon" aria-hidden="true">💬</span>
+                <div>
+                  <strong>Companion Chat</strong>
+                  <p>A simple interface to talk directly with your favorite character.</p>
+                </div>
+              </li>
+
+              <li class="future-item">
+                <span class="future-icon" aria-hidden="true">🌱</span>
+                <div>
+                  <strong>Expanded Roster</strong>
+                  <p>Adding more animals to the Animai Kingdom family.</p>
+                </div>
+              </li>
+
+            </ul>
+          </div><!-- end .future-work -->
+
+          <!-- RIGHT: Contact form -->
+          <div class="contact-form-wrap fade-in">
+            <h3 class="contact-form-title">Say Hello</h3>
+            <p class="contact-form-subtitle">Have a question or idea? Send us a message.</p>
+
+            <!-- novalidate: lets JavaScript handle validation with the shake animation -->
+            <form id="contact-form" novalidate>
+
+              <!-- Each label for= matches its input id= — required for screen readers -->
+              <div class="form-group">
+                <label for="contact-name" class="form-label">Your Name</label>
+                <input type="text" id="contact-name" name="name" class="form-input" placeholder="Enter your name" required autocomplete="name" />
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email" class="form-label">Email Address</label>
+                <input type="email" id="contact-email" name="email" class="form-input" placeholder="Enter your email" required autocomplete="email" />
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message" class="form-label">Your Message</label>
+                <textarea id="contact-message" name="message" class="form-input form-textarea" placeholder="Write your message here..." rows="5" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">Send Message ✉️</button>
+
+              <!-- Confirmation message — hidden by default.
+                   aria-live="polite" = screen reader announces it when it appears.
+                   role="status" = marks this as a status update. -->
+              <div id="form-confirmation" class="form-confirmation" hidden aria-live="polite" role="status">
+                🎉 Message received! Welcome to Animai Kingdom.
+              </div>
+
+            </form>
+          </div><!-- end .contact-form-wrap -->
+
+        </div><!-- end .contact-grid -->
+      </div>
+    </section>
+
+  </main><!-- end main -->
+
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="Animai Kingdom logo" class="footer-logo" />
+        <span class="footer-name">Animai Kingdom</span>
+        <p class="footer-tagline">Where Fantasy Companions Meet Artificial Intelligence.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#companions">Companions</a>
+        <a href="#progress">Progress</a>
+        <a href="#employees">AI Employees</a>
+        <a href="#howto">How to Use</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <p class="footer-credit">
+        Made with AI &nbsp;·&nbsp; Built with ❤️ for class &nbsp;·&nbsp;
+        <span class="footer-badge">AI Web Developer: Claude</span>
+      </p>
+
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       BACK TO TOP BUTTON
+       Fixed bottom-right. JavaScript adds "visible" class after
+       300px of scroll. CSS opacity transition fades it in/out.
+  ============================================================ -->
+  <button id="back-to-top" class="back-to-top" aria-label="Scroll back to the top of the page">↑</button>
+
+
+  <!-- JavaScript — at end of body so all HTML is ready before scripts run -->
+  <script src="script.js"></script>
+
+</body>
+</html>
